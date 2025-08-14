@@ -144,6 +144,21 @@ def not_found(error=None):
     resp = jsonify(message)
     resp.status_code = 404
     return resp
+
+@app.route('/reset-autoincrement', methods=['POST'])
+def reset_autoincrement():
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute("ALTER TABLE tbl_user AUTO_INCREMENT = 1")
+        conn.commit()
+        return jsonify({'message': 'AUTO_INCREMENT reiniciado a 1'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
 		
 if __name__ == "__main__":
     app.run()
