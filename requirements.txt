@@ -3,3 +3,4 @@ gunicorn
 flask-mysql
 python-dotenv
 pymysql
+flask-corse
